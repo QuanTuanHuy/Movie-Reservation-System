@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: movie-reservation-system
+
+  datasource:
+    username: root
+    password: quantuanhuy
+    url: jdbc:mysql://localhost:3306/movie_reservation_system
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+server:
+  port: 5454
