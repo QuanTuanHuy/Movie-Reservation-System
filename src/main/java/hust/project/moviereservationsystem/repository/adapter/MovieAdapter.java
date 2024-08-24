@@ -50,7 +50,7 @@ public class MovieAdapter implements IMoviePort {
     }
 
     @Override
-    public MovieEntity getDetailMovie(Long movieId) {
+    public MovieEntity getMovieById(Long movieId) {
         return movieMapper.toEntityFromModel(movieRepository.findById(movieId)
                 .orElseThrow(GetMovieException::new));
     }
@@ -61,7 +61,7 @@ public class MovieAdapter implements IMoviePort {
     }
 
     @Override
-    public void deleteMovie(Long movieId) {
+    public void deleteMovieById(Long movieId) {
         try {
             movieRepository.deleteById(movieId);
         } catch (Exception e) {
