@@ -12,9 +12,9 @@ public interface IMoviePort {
 
     Pair<PageInfo, List<MovieEntity>> getAllMovies(GetMovieRequest filter);
 
-    MovieEntity getDetailMovie(Long movieId);
+    MovieEntity getMovieById(Long movieId);
 
     List<MovieEntity> getMoviesByIds(List<Long> movieIds);
 
-    void deleteMovie(Long movieId);
+    void deleteMovieById(Long movieId);
 }

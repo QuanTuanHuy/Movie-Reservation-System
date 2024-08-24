@@ -10,6 +10,6 @@ public class DeleteMovieUseCase {
     private final IMoviePort moviePort;
 
     public void deleteMovie(Long movieId) {
-        moviePort.deleteMovie(movieId);
+        moviePort.deleteMovieById(movieId);
     }
 }

@@ -46,7 +46,7 @@ public class GetMovieUseCase {
     }
 
     public MovieEntity getDetailMovie(Long movieId) {
-        var movie = moviePort.getDetailMovie(movieId);
+        var movie = moviePort.getMovieById(movieId);
 
         var movieGenres = movieGenrePort.getByMovieIds(List.of(movie.getId()));
         var genreIds = movieGenres.stream().map(MovieGenreEntity::getGenreId).toList();
