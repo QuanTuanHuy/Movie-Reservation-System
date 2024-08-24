@@ -34,6 +34,10 @@ public enum ErrorCodes {
 
     CREATE_WARD_FAIL(4000019L, "Create ward fail"),
     GET_WARD_NOT_FOUND(4000020L, "Get ward not found"),
+
+    CREATE_CINEMA_HALL_FAIL(4000021L, "Create cinema hall fail"),
+    GET_CINEMA_HALL_NOT_FOUND(4000022L, "Get cinema hall not found"),
+    DELETE_CINEMA_HALL_FAIL(4000023L, "Delete cinema hall fail"),
     ;
     private final Long code;
     private final String message;
