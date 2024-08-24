@@ -2,7 +2,6 @@ package hust.project.moviereservationsystem.constant;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 @AllArgsConstructor
@@ -19,6 +18,22 @@ public enum ErrorCodes {
     GET_GENRE_NOT_FOUND(400008L, "Get genre not found"),
 
     CREATE_MOVIE_GENRE_FAIL(400009L, "Create movie genre fail"),
+
+    CREATE_CINEMA_FAIL(4000010L, "Create cinema fail"),
+    GET_CINEMA_NOT_FOUND(4000011L, "Get cinema not found"),
+    DELETE_CINEMA_FAIL(4000012L, "Delete cinema fail"),
+
+    CREATE_ADDRESS_FAIL(4000013L, "Create address fail"),
+    GET_ADDRESS_NOT_FOUND(4000014L, "Get address not found"),
+
+    CREATE_CITY_FAIL(4000015L, "Create city fail"),
+    GET_CITY_NOT_FOUND(4000016L, "Get city not found"),
+
+    CREATE_DISTRICT_FAIL(4000017L, "Create district fail"),
+    GET_DISTRICT_NOT_FOUND(4000018L, "Get district not found"),
+
+    CREATE_WARD_FAIL(4000019L, "Create ward fail"),
+    GET_WARD_NOT_FOUND(4000020L, "Get ward not found"),
     ;
     private final Long code;
     private final String message;
