@@ -8,6 +8,7 @@ public class PageInfoUtils {
         var pageInfo = new PageInfo();
         pageInfo.setTotalRecord(result.getTotalElements());
         pageInfo.setTotalPage((long) result.getTotalPages());
+        pageInfo.setPageSize((long) result.getSize());
         if (result.hasNext()) {
             pageInfo.setNextPage((long) result.nextPageable().getPageNumber());
         }
