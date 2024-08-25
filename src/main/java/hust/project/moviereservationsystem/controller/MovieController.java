@@ -1,17 +1,14 @@
 package hust.project.moviereservationsystem.controller;
 
-import hust.project.moviereservationsystem.entity.MovieEntity;
 import hust.project.moviereservationsystem.entity.request.CreateMovieRequest;
 import hust.project.moviereservationsystem.entity.request.GetMovieRequest;
-import hust.project.moviereservationsystem.entity.response.PageInfo;
+import hust.project.moviereservationsystem.entity.response.Resource;
 import hust.project.moviereservationsystem.service.IMovieService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.util.Pair;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,17 +19,17 @@ public class MovieController {
     private final IMovieService movieService;
 
     @PostMapping
-    ResponseEntity<MovieEntity> createMovie(@RequestBody CreateMovieRequest request) {
-        return ResponseEntity.ok(movieService.createMovie(request));
+    ResponseEntity<Resource> createMovie(@RequestBody CreateMovieRequest request) {
+        return ResponseEntity.ok(new Resource(movieService.createMovie(request)));
     }
 
     @GetMapping("/{movieId}")
-    ResponseEntity<MovieEntity> getDetail(@PathVariable(name = "movieId") Long movieId) {
-        return ResponseEntity.ok(movieService.getDetailMovie(movieId));
+    ResponseEntity<Resource> getDetail(@PathVariable(name = "movieId") Long movieId) {
+        return ResponseEntity.ok(new Resource(movieService.getDetailMovie(movieId)));
     }
 
     @GetMapping
-    ResponseEntity<Pair<PageInfo, List<MovieEntity>>> getAll(
+    ResponseEntity<Resource> getAll(
             @RequestParam(defaultValue = DEFAULT_PAGE, name = "page") Long page,
             @RequestParam(defaultValue = DEFAULT_PAGE_SIZE, name = "page_size") Long pageSize,
             @RequestParam(required = false, name = "title") String title,
@@ -49,12 +46,12 @@ public class MovieController {
                 .language(language)
                 .releaseDate(releaseDate)
                 .build();
-        return ResponseEntity.ok(movieService.getAllMovies(filter));
+        return ResponseEntity.ok(new Resource(movieService.getAllMovies(filter)));
     }
     
     @DeleteMapping("/{id}")
-    ResponseEntity<Void> deleteMovie(@PathVariable(name = "id") Long id) {
+    ResponseEntity<Resource> deleteMovie(@PathVariable(name = "id") Long id) {
         movieService.deleteMovie(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(new Resource(null));
     }
 }

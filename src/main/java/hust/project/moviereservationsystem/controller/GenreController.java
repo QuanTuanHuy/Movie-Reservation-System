@@ -1,7 +1,7 @@
 package hust.project.moviereservationsystem.controller;
 
-import hust.project.moviereservationsystem.entity.GenreEntity;
 import hust.project.moviereservationsystem.entity.request.CreateGenreRequest;
+import hust.project.moviereservationsystem.entity.response.Resource;
 import hust.project.moviereservationsystem.service.IGenreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -14,12 +14,12 @@ public class GenreController {
     private final IGenreService genreService;
 
     @PostMapping
-    ResponseEntity<GenreEntity> createGenre(@RequestBody CreateGenreRequest request) {
-        return ResponseEntity.ok(genreService.createGenre(request));
+    ResponseEntity<Resource> createGenre(@RequestBody CreateGenreRequest request) {
+        return ResponseEntity.ok(new Resource(genreService.createGenre(request)));
     }
 
     @GetMapping("/{id}")
-    ResponseEntity<GenreEntity> getDetail(@PathVariable(name = "id") Long id) {
-        return ResponseEntity.ok(genreService.getDetailGenre(id));
+    ResponseEntity<Resource> getDetail(@PathVariable(name = "id") Long id) {
+        return ResponseEntity.ok(new Resource(genreService.getDetailGenre(id)));
     }
 }
