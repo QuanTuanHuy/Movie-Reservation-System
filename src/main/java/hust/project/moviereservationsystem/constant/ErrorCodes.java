@@ -45,6 +45,10 @@ public enum ErrorCodes {
     CREATE_SHOW_FAIL(4000026L, "Create show fail"),
     GET_SHOW_NOT_FOUND(4000027L, "Get show not found"),
     DELETE_SHOW_FAIL(4000028L, "Delete show fail"),
+
+    CREATE_SEAT_TYPE_FAIL(4000029L, "Create seat type fail"),
+    GET_SEAT_TYPE_NOT_FOUND(4000030L, "Get seat type not found"),
+    DELETE_SEAT_TYPE_FAIL(4000031L, "Delete seat type fail"),
     ;
     private final Long code;
     private final String message;
