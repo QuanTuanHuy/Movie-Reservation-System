@@ -54,6 +54,11 @@ public class CinemaAdapter implements ICinemaPort {
     }
 
     @Override
+    public List<CinemaEntity> getCinemasByIds(List<Long> ids) {
+        return cinemaMapper.toEntitiesFromModels(cinemaRepository.findByIdIn(ids));
+    }
+
+    @Override
     public void deleteCinemaById(Long cinemaId) {
         try {
             cinemaRepository.deleteById(cinemaId);

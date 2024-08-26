@@ -12,10 +12,10 @@ public class CinemaSpecification {
         return (root, query, builder) -> {
             var predicates = new ArrayList<Predicate>();
             if (filter.getCityCode() != null) {
-                predicates.add(builder.and(builder.equal(root.get("cityCode"), filter.getCityCode())));
+                predicates.add(builder.equal(root.get("cityCode"), filter.getCityCode()));
             }
             if (filter.getName() != null) {
-                predicates.add(builder.and(builder.like(root.get("name"), "%".concat(filter.getName()).concat("%"))));
+                predicates.add(builder.like(root.get("name"), "%".concat(filter.getName()).concat("%")));
             }
             return builder.and(predicates.toArray(new Predicate[0]));
         };

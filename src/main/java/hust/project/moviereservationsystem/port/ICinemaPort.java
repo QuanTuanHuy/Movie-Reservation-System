@@ -14,5 +14,7 @@ public interface ICinemaPort {
 
     CinemaEntity getCinemaById(Long cinemaId);
 
+    List<CinemaEntity> getCinemasByIds(List<Long> ids);
+
     void deleteCinemaById(Long cinemaId);
 }
