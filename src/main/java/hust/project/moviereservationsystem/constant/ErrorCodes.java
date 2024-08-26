@@ -41,6 +41,10 @@ public enum ErrorCodes {
 
     CREATE_CINEMA_HALL_SEAT_FAIL(4000024L, "Create cinema hall seat fail"),
     GET_CINEMA_HALL_SEAT_NOT_FOUND(4000025L, "Get cinema hall seat not found"),
+
+    CREATE_SHOW_FAIL(4000026L, "Create show fail"),
+    GET_SHOW_NOT_FOUND(4000027L, "Get show not found"),
+    DELETE_SHOW_FAIL(4000028L, "Delete show fail"),
     ;
     private final Long code;
     private final String message;
