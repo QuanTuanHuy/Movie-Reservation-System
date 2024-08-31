@@ -49,6 +49,15 @@ public enum ErrorCodes {
     CREATE_SEAT_TYPE_FAIL(4000029L, "Create seat type fail"),
     GET_SEAT_TYPE_NOT_FOUND(4000030L, "Get seat type not found"),
     DELETE_SEAT_TYPE_FAIL(4000031L, "Delete seat type fail"),
+
+    CREATE_SHOW_SEAT_FAIL(4000032L, "Create show seat fail"),
+    GET_SHOW_SEAT_NOT_FOUND(4000033L, "Get show seat not found"),
+    UPDATE_SHOW_SEAT_FAIL(4000034L, "Update show seat fail"),
+
+    UNEXPECTED_ERROR(4000035L, "Unexpected error"),
+
+    EMAIL_IS_EXISTED(4000036L, "Email is existed"),
+    INVALID_EMAIL_OR_PASSWORD(4000037L, "Invalid email or password"),
     ;
     private final Long code;
     private final String message;

@@ -19,3 +19,74 @@ spring:
 
 server:
   port: 5454
+
+app:
+  security:
+    jwt:
+      secret: JHD2p1EolyuH3K6Gjz05onMO5hRT8CYHJHD2p1EolyuH3K6Gjz05onMO5hRT8CYH
+      expiration: 86400000
+      header: Authorization
+      prefix: Bearer
+    filter:
+      publicUrls:
+        - first: /api/v1/auth/login
+          second: POST
+        - first: /api/v1/auth/sign-up
+          second: POST
+        - first: /api/v1/movies
+          second: GET
+        - first: /api/v1/movies/\d+
+          second: GET
+        - first: /api/v1/cinemas
+          second: GET
+        - first: /api/v1/cinemas/\d+
+          second: GET
+        - first: /api/v1/genres/\d+
+          second: GET
+        - first: /api/v1/cinemas/\d+/cinema_halls
+          second: GET
+        - first: /api/v1/cinema_hall_seats
+          second: GET
+        - first: /api/v1/cinemas/\d+/shows
+          second: GET
+        - first: /api/v1/shows
+          second: GET
+        - first: /api/v1/shows/\d+
+          second: GET
+        - first: /api/v1/seat_types
+          second: GET
+        - first: /api/v1/show_seats
+          second: GET
+      protectedUrls:
+        - urlPattern: /api/v1/genres/*
+          roles:
+            - ADMIN
+            - MODERATOR
+        - urlPattern: /api/v1/movies/*
+          roles:
+            - ADMIN
+            - MODERATOR
+        - urlPattern: /api/v1/cinemas/*
+          roles:
+            - ADMIN
+        - urlPattern: /api/v1/cinema_halls/*
+          roles:
+            - ADMIN
+        - urlPattern: /api/v1/cinema_hall_seats/*
+          roles:
+            - ADMIN
+            - MODERATOR
+        - urlPattern: /api/v1/cinema_hall_seats/*
+          roles:
+            - ADMIN
+        - urlPattern: /api/v1/shows/*
+          roles:
+            - ADMIN
+        - urlPattern: /api/v1/seat_types/*
+          roles:
+            - ADMIN
+            - MODERATOR
+        - urlPattern: /api/v1/show_seats/*
+          roles:
+            - ADMIN
+            - MODERATOR

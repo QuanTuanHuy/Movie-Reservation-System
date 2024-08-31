@@ -1,6 +1,9 @@
-package hust.project.moviereservationsystem.entity;
+package hust.project.moviereservationsystem.entity.request;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
 
@@ -8,22 +11,12 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserEntity extends BaseEntity {
+public class CreateUserRequest {
     private String firstName;
-
     private String lastName;
-
     private String email;
-
     private String password;
-
     private String phoneNumber;
-
     private Long roleId;
-
-    private Long addressId;
-
-    private String gender;
-
-    private LocalDate dateOfBirth;
+    private LocalDate dob;
 }
