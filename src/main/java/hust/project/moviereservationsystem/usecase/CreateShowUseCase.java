@@ -21,6 +21,7 @@ public class CreateShowUseCase {
     private final ShowMapper showMapper;
     private final GetMovieUseCase getMovieUseCase;
     private final ICinemaHallPort cinemaHallPort;
+    private final CreateShowSeatUseCase createShowSeatUseCase;
 
     @Transactional(rollbackFor = Exception.class)
     public ShowEntity createShow(CreateShowRequest request) {
@@ -47,6 +48,9 @@ public class CreateShowUseCase {
         show = showPort.save(show);
         show.setCinemaHall(cinemaHall);
         show.setMovie(movie);
+
+        // Auto create seats for show
+        createShowSeatUseCase.createShowSeats(show.getId());
 
         return show;
 

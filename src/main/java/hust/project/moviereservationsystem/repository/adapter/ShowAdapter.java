@@ -2,7 +2,6 @@ package hust.project.moviereservationsystem.repository.adapter;
 
 import hust.project.moviereservationsystem.entity.ShowEntity;
 import hust.project.moviereservationsystem.entity.request.GetShowRequest;
-import hust.project.moviereservationsystem.entity.response.PageInfo;
 import hust.project.moviereservationsystem.exception.CreateShowException;
 import hust.project.moviereservationsystem.exception.DeleteShowException;
 import hust.project.moviereservationsystem.exception.GetShowException;
@@ -10,12 +9,7 @@ import hust.project.moviereservationsystem.mapper.ShowMapper;
 import hust.project.moviereservationsystem.port.IShowPort;
 import hust.project.moviereservationsystem.repository.IShowRepository;
 import hust.project.moviereservationsystem.repository.specification.ShowSpecification;
-import hust.project.moviereservationsystem.utils.PageInfoUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -55,6 +49,11 @@ public class ShowAdapter implements IShowPort {
         return showMapper.toEntitiesFromModels(
                 showRepository.findAll(ShowSpecification.getShowsByCinemaHallsIdsAndDate(cinemaHallIds, date))
         );
+    }
+
+    @Override
+    public List<ShowEntity> getShowsByIds(List<Long> ids) {
+        return showMapper.toEntitiesFromModels(showRepository.findAllById(ids));
     }
 
     @Override
