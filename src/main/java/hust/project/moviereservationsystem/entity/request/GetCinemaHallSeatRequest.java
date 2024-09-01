@@ -8,8 +8,8 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 public class GetCinemaHallSeatRequest {
-    public Long page;
-    public Long pageSize;
+    private Long page;
+    private Long pageSize;
     private String type;
     private Long cinemaHallId;
 }
