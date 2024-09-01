@@ -58,6 +58,13 @@ public enum ErrorCodes {
 
     EMAIL_IS_EXISTED(4000036L, "Email is existed"),
     INVALID_EMAIL_OR_PASSWORD(4000037L, "Invalid email or password"),
+
+    CREATE_BOOKING_FAIL(4000038L, "Create booking fail"),
+    GET_BOOKING_NOT_FOUND(4000039L, "Get booking not found"),
+    UPDATE_BOOKING_FAIL(4000040L, "Update booking fail"),
+
+    BAD_REQUEST(4000041L, "Bad request"),
+
     ;
     private final Long code;
     private final String message;
