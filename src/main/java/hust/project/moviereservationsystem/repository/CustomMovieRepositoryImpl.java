@@ -18,6 +18,7 @@ public class CustomMovieRepositoryImpl implements ICustomMovieRepository {
 
     @Override
     public Page<MovieModel> getAllMovies(GetMovieRequest filter, Pageable pageable) {
+        // fix later
         StringBuilder rawQuery = new StringBuilder()
                 .append("SELECT DISTINCT m.* FROM movies m ")
                 .append("JOIN movie_genres mg ON m.id = mg.movie_id ")

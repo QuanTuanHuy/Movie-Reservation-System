@@ -1,6 +1,6 @@
 package hust.project.moviereservationsystem.usecase;
 
-import hust.project.moviereservationsystem.entity.BaseEntity;
+import hust.project.moviereservationsystem.entity.GenreEntity;
 import hust.project.moviereservationsystem.entity.MovieEntity;
 import hust.project.moviereservationsystem.entity.MovieGenreEntity;
 import hust.project.moviereservationsystem.entity.request.GetMovieRequest;
@@ -27,16 +27,17 @@ public class GetMovieUseCase {
         var result = moviePort.getAllMovies(request);
 
         var movies = result.getSecond();
-        var movieIds = movies.stream().map(BaseEntity::getId).toList();
+        var movieIds = movies.stream().map(MovieEntity::getId).toList();
 
         var movieGenres = movieGenrePort.getByMovieIds(movieIds);
 
         var genreIds = movieGenres.stream().map(MovieGenreEntity::getGenreId).toList();
         var genres = genrePort.getGenresByIds(genreIds);
-        var mapIdToGenre = genres.stream().collect(Collectors.toMap(BaseEntity::getId, Function.identity()));
+        var mapIdToGenre = genres.stream().collect(Collectors.toMap(GenreEntity::getId, Function.identity()));
 
         for (var movie : movies) {
-            var curMovieGenre = movieGenres.stream().filter(mg -> mg.getMovieId().equals(movie.getId())).toList();
+            var curMovieGenre = movieGenres.stream()
+                    .filter(mg -> mg.getMovieId().equals(movie.getId())).toList();
             for (var mg : curMovieGenre) {
                 movie.getGenres().add(mapIdToGenre.get(mg.getGenreId()));
             }
