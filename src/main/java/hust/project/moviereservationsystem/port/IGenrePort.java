@@ -11,5 +11,9 @@ public interface IGenrePort {
 
     List<GenreEntity> getGenresByIds(List<Long> genreIds);
 
+    List<GenreEntity> getAllGenres();
+
     GenreEntity getGenreByName(String name);
+
+    void deleteById(Long id);
 }

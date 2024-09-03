@@ -2,6 +2,7 @@ package hust.project.moviereservationsystem.repository.adapter;
 
 import hust.project.moviereservationsystem.entity.GenreEntity;
 import hust.project.moviereservationsystem.exception.CreateGenreException;
+import hust.project.moviereservationsystem.exception.DeleteGenreException;
 import hust.project.moviereservationsystem.exception.GetGenreException;
 import hust.project.moviereservationsystem.mapper.GenreMapper;
 import hust.project.moviereservationsystem.port.IGenrePort;
@@ -39,8 +40,22 @@ public class GenreAdapter implements IGenrePort {
     }
 
     @Override
+    public List<GenreEntity> getAllGenres() {
+        return genreMapper.toEntitiesFromModels(genreRepository.findAll());
+    }
+
+    @Override
     public GenreEntity getGenreByName(String name) {
         return genreMapper.toEntityFromModel(genreRepository.findByName(name)
                 .orElseThrow(GetGenreException::new));
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        try {
+            genreRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new DeleteGenreException();
+        }
     }
 }

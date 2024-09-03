@@ -16,6 +16,7 @@ public enum ErrorCodes {
 
     CREATE_GENRE_FAIL(400007L, "Create genre fail"),
     GET_GENRE_NOT_FOUND(400008L, "Get genre not found"),
+    DELETE_GENRE_FAIL(400009L, "Delete genre fail"),
 
     CREATE_MOVIE_GENRE_FAIL(400009L, "Create movie genre fail"),
 

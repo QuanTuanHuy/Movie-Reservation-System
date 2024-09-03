@@ -18,8 +18,19 @@ public class GenreController {
         return ResponseEntity.ok(new Resource(genreService.createGenre(request)));
     }
 
+    @GetMapping
+    ResponseEntity<Resource> getAll() {
+        return ResponseEntity.ok(new Resource(genreService.getAllGenres()));
+    }
+
     @GetMapping("/{id}")
     ResponseEntity<Resource> getDetail(@PathVariable(name = "id") Long id) {
         return ResponseEntity.ok(new Resource(genreService.getDetailGenre(id)));
+    }
+
+    @DeleteMapping("/{id}")
+    ResponseEntity<Resource> deleteGenre(@PathVariable(name = "id") Long id) {
+        genreService.deleteGenre(id);
+        return ResponseEntity.ok(new Resource(null));
     }
 }

@@ -15,4 +15,8 @@ public class GetGenreUseCase {
     public GenreEntity getDetailGenre(Long genreId) {
         return genrePort.getGenreById(genreId);
     }
+
+    public List<GenreEntity> getAllGenres() {
+        return genrePort.getAllGenres();
+    }
 }
