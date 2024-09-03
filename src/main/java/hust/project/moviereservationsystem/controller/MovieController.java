@@ -32,9 +32,9 @@ public class MovieController {
     ResponseEntity<Resource> getAll(
             @RequestParam(defaultValue = DEFAULT_PAGE, name = "page") Long page,
             @RequestParam(defaultValue = DEFAULT_PAGE_SIZE, name = "page_size") Long pageSize,
-            @RequestParam(required = false, name = "title") String title,
-            @RequestParam(required = false, name = "genre") String genre,
-            @RequestParam(required = false, name = "language") String language,
+            @RequestParam(required = false, defaultValue = "", name = "title") String title,
+            @RequestParam(required = false, defaultValue = "", name = "genre") String genre,
+            @RequestParam(required = false, defaultValue = "", name = "language") String language,
             @RequestParam(required = false, name = "release_date") LocalDate releaseDate
 
     ) {
@@ -44,7 +44,7 @@ public class MovieController {
                 .title(title)
                 .genre(genre)
                 .language(language)
-                .releaseDate(releaseDate)
+                .releaseDate(releaseDate != null ? releaseDate : LocalDate.now())
                 .build();
         return ResponseEntity.ok(new Resource(movieService.getAllMovies(filter)));
     }

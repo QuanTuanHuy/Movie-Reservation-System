@@ -16,42 +16,24 @@ public class CustomMovieRepositoryImpl implements ICustomMovieRepository {
     @PersistenceContext
     private EntityManager entityManager;
 
-    @Override
     public Page<MovieModel> getAllMovies(GetMovieRequest filter, Pageable pageable) {
-        // fix later
         StringBuilder rawQuery = new StringBuilder()
-                .append("SELECT DISTINCT m.* FROM movies m ")
-                .append("JOIN movie_genres mg ON m.id = mg.movie_id ")
-                .append("JOIN genres g ON mg.genre_id = g.id ")
-                .append("WHERE 1=1 ");
-
-        if (filter.getTitle() != null) {
-            rawQuery.append("AND m.title LIKE CONCAT('%', :title, '%') ");
-        }
-        if (filter.getLanguage() != null) {
-            rawQuery.append("AND m.language LIKE CONCAT('%', :language, '%') ");
-        }
-        if (filter.getReleaseDate() != null) {
-            rawQuery.append("AND m.release_date <= :release_date ");
-        }
-        if (filter.getGenre() != null) {
-            rawQuery.append("AND g.name LIKE CONCAT('%', :genre, '%') ");
-        }
-
+                .append("SELECT * FROM movies ")
+                .append("WHERE (:title = '' OR title LIKE CONCAT('%', :title, '%')) ")
+                .append("AND release_date <= :release_date ")
+                .append("AND (:language = '' OR language LIKE CONCAT('%', :language, '%')) ")
+                .append("AND id IN ")
+                .append("(")
+                .append("SELECT m.id")
+                .append("    FROM movies m JOIN movie_genres mg ON m.id = mg.movie_id")
+                .append("    JOIN genres g ON mg.genre_id = g.id")
+                .append("    WHERE (:genre = '' OR g.name LIKE CONCAT('%', :genre, '%')) ")
+                .append(")");
         var query = entityManager.createNativeQuery(rawQuery.toString(), MovieModel.class);
-
-        if (filter.getTitle() != null) {
-            query.setParameter("title", filter.getTitle());
-        }
-        if (filter.getLanguage() != null) {
-            query.setParameter("language", filter.getLanguage());
-        }
-        if (filter.getReleaseDate() != null) {
-            query.setParameter("release_date", filter.getReleaseDate());
-        }
-        if (filter.getGenre() != null) {
-            query.setParameter("genre", filter.getGenre());
-        }
+        query.setParameter("title", filter.getTitle());
+        query.setParameter("release_date", filter.getReleaseDate());
+        query.setParameter("language", filter.getLanguage());
+        query.setParameter("genre", filter.getGenre());
 
         int totalRecords = query.getResultList().size();
 
@@ -62,5 +44,4 @@ public class CustomMovieRepositoryImpl implements ICustomMovieRepository {
 
         return new PageImpl<>(movies, pageable, totalRecords);
     }
-
 }
