@@ -57,4 +57,11 @@ public class BookingAdapter implements IBookingPort {
     public List<BookingEntity> getBookingsByUserId(Long userId) {
         return bookingMapper.toEntitiesFromModels(bookingRepository.findByUserId(userId));
     }
+
+    @Override
+    public List<BookingEntity> getBookingsByShowIds(List<Long> showIds) {
+        return bookingMapper.toEntitiesFromModels(
+                bookingRepository.findByShowIdIn(showIds)
+        );
+    }
 }

@@ -2,6 +2,7 @@ package hust.project.moviereservationsystem.port;
 
 import hust.project.moviereservationsystem.entity.ShowEntity;
 import hust.project.moviereservationsystem.entity.request.GetShowRequest;
+import hust.project.moviereservationsystem.entity.request.GetStatisticRequest;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -17,6 +18,8 @@ public interface IShowPort {
     List<ShowEntity> getShowsByCinemaHallIdsAndDate(List<Long> cinemaHallIds, LocalDate date);
 
     List<ShowEntity> getShowsByIds(List<Long> ids);
+
+    List<ShowEntity> getShowsForStatistic(GetStatisticRequest request, List<Long> cinemaHallIds);
 
     ShowEntity getShowById(Long id);
 

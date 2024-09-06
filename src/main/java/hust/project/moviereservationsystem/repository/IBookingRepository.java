@@ -8,4 +8,6 @@ import java.util.List;
 @Repository
 public interface IBookingRepository extends IBaseRepository<BookingModel> {
     List<BookingModel> findByUserId(Long userId);
+
+    List<BookingModel> findByShowIdIn(List<Long> showIds);
 }

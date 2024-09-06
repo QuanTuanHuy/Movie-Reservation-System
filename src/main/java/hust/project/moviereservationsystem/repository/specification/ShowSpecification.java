@@ -1,6 +1,7 @@
 package hust.project.moviereservationsystem.repository.specification;
 
 import hust.project.moviereservationsystem.entity.request.GetShowRequest;
+import hust.project.moviereservationsystem.entity.request.GetStatisticRequest;
 import hust.project.moviereservationsystem.model.ShowModel;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
@@ -49,6 +50,27 @@ public class ShowSpecification {
 
             predicates.add(builder.between(root.get("startTime"), startOfDay, endOfDay));
 
+
+            if (!CollectionUtils.isEmpty(cinemaHallIds)) {
+                predicates.add(root.get("cinemaHallId").in(cinemaHallIds));
+            }
+
+            return builder.and(predicates.toArray(new Predicate[0]));
+        };
+    }
+
+    public static Specification<ShowModel> getShowsForStatistic(GetStatisticRequest request, List<Long> cinemaHallIds) {
+        return (root, query, builder) -> {
+            List<Predicate> predicates = new ArrayList<>();
+
+            if (request.getMovieId() != null) {
+                predicates.add(builder.equal(root.get("movieId"), request.getMovieId()));
+            }
+            if (request.getStartDate() != null && request.getEndDate() != null) {
+                LocalDateTime startTime = request.getStartDate().atStartOfDay();
+                LocalDateTime endTime = request.getEndDate().plusDays(1).atStartOfDay();
+                predicates.add(builder.between(root.get("startTime"), startTime, endTime));
+            }
 
             if (!CollectionUtils.isEmpty(cinemaHallIds)) {
                 predicates.add(root.get("cinemaHallId").in(cinemaHallIds));

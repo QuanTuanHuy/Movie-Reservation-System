@@ -2,6 +2,7 @@ package hust.project.moviereservationsystem.repository.adapter;
 
 import hust.project.moviereservationsystem.entity.ShowEntity;
 import hust.project.moviereservationsystem.entity.request.GetShowRequest;
+import hust.project.moviereservationsystem.entity.request.GetStatisticRequest;
 import hust.project.moviereservationsystem.exception.CreateShowException;
 import hust.project.moviereservationsystem.exception.DeleteShowException;
 import hust.project.moviereservationsystem.exception.GetShowException;
@@ -54,6 +55,13 @@ public class ShowAdapter implements IShowPort {
     @Override
     public List<ShowEntity> getShowsByIds(List<Long> ids) {
         return showMapper.toEntitiesFromModels(showRepository.findAllById(ids));
+    }
+
+    @Override
+    public List<ShowEntity> getShowsForStatistic(GetStatisticRequest request, List<Long> cinemaHallIds) {
+        return showMapper.toEntitiesFromModels(
+                showRepository.findAll(ShowSpecification.getShowsForStatistic(request, cinemaHallIds))
+        );
     }
 
     @Override
