@@ -64,6 +64,10 @@ public enum ErrorCodes {
     GET_BOOKING_NOT_FOUND(4000039L, "Get booking not found"),
     UPDATE_BOOKING_FAIL(4000040L, "Update booking fail"),
 
+    CREATE_RATING_FAIL(4000041L, "Create rating fail"),
+    GET_RATING_NOT_FOUND(4000042L, "Get rating not found"),
+    DELETE_RATING_FAIL(4000043L, "Delete rating fail"),
+
     BAD_REQUEST(4000041L, "Bad request"),
 
     ;

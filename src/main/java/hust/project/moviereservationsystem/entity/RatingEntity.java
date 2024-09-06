@@ -9,12 +9,14 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CinemaHallEntity extends BaseEntity {
-    private String name;
-    private Long totalSeats;
-    private String image;
-    private String type;
+public class RatingEntity extends BaseEntity {
+    private Long movieId;
 
-    private Long cinemaId;
-    private String cinemaName;
+    private Long userId;
+
+    private String userName;
+
+    private Long ratingStar;
+
+    private String content;
 }

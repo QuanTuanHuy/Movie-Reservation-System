@@ -43,6 +43,8 @@ app:
           second: GET
         - first: /api/v1/genres/\d+
           second: GET
+        - first: /api/v1/genres
+          second: GET
         - first: /api/v1/cinemas/\d+/cinema_halls
           second: GET
         - first: /api/v1/cinema_hall_seats

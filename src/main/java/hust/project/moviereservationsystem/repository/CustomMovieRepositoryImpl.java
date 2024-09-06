@@ -44,4 +44,26 @@ public class CustomMovieRepositoryImpl implements ICustomMovieRepository {
 
         return new PageImpl<>(movies, pageable, totalRecords);
     }
+
+    @Override
+    public boolean isUserWatchedMovie(Long userId, Long movieId) {
+        String rawQuery = "WITH " +
+                "B AS " +
+                "    (" +
+                "      SELECT DISTINCT user_id, show_id FROM bookings WHERE user_id = :user_id " +
+                "    )," +
+                "S AS " +
+                "    (" +
+                "       SELECT id, movie_id FROM shows WHERE movie_id = :movie_id " +
+                "    )" +
+                "SELECT 1 " +
+                "FROM B JOIN S ON B.show_id = S.id " +
+                "WHERE S.movie_id = :movie_id ";
+
+        var query = entityManager.createNativeQuery(rawQuery);
+        query.setParameter("movie_id", movieId);
+        query.setParameter("user_id", userId);
+
+        return !query.getResultList().isEmpty();
+    }
 }
