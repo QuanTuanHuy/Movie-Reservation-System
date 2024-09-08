@@ -2,6 +2,7 @@ package hust.project.moviereservationsystem.controller;
 
 import hust.project.moviereservationsystem.entity.request.CreateMovieRequest;
 import hust.project.moviereservationsystem.entity.request.GetMovieRequest;
+import hust.project.moviereservationsystem.entity.request.UpdateMovieRequest;
 import hust.project.moviereservationsystem.entity.response.Resource;
 import hust.project.moviereservationsystem.service.IMovieService;
 import lombok.RequiredArgsConstructor;
@@ -23,9 +24,9 @@ public class MovieController {
         return ResponseEntity.ok(new Resource(movieService.createMovie(request)));
     }
 
-    @GetMapping("/{movieId}")
-    ResponseEntity<Resource> getDetail(@PathVariable(name = "movieId") Long movieId) {
-        return ResponseEntity.ok(new Resource(movieService.getDetailMovie(movieId)));
+    @GetMapping("/{id}")
+    ResponseEntity<Resource> getDetail(@PathVariable(name = "id") Long id) {
+        return ResponseEntity.ok(new Resource(movieService.getDetailMovie(id)));
     }
 
     @GetMapping
@@ -47,6 +48,14 @@ public class MovieController {
                 .releaseDate(releaseDate != null ? releaseDate : LocalDate.now())
                 .build();
         return ResponseEntity.ok(new Resource(movieService.getAllMovies(filter)));
+    }
+
+    @PutMapping("/{id}")
+    ResponseEntity<Resource> updateMovie(
+            @PathVariable(name = "id") Long id,
+            @RequestBody UpdateMovieRequest request
+    ) {
+        return ResponseEntity.ok(new Resource(movieService.updateMovie(id, request)));
     }
     
     @DeleteMapping("/{id}")

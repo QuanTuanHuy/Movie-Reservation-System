@@ -2,7 +2,7 @@ package hust.project.moviereservationsystem.usecase;
 
 import hust.project.moviereservationsystem.entity.MovieEntity;
 import hust.project.moviereservationsystem.entity.MovieGenreEntity;
-import hust.project.moviereservationsystem.entity.request.CreateMovieRequest;
+import hust.project.moviereservationsystem.entity.request.UpdateMovieRequest;
 import hust.project.moviereservationsystem.exception.CreateMovieException;
 import hust.project.moviereservationsystem.mapper.MovieMapper;
 import hust.project.moviereservationsystem.port.IGenrePort;
@@ -19,17 +19,19 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional
 @Slf4j
-public class CreateMovieUseCase {
+public class UpdateMovieUseCase {
     private final IMoviePort moviePort;
     private final MovieMapper movieMapper;
-    private final IGenrePort genrePort;
     private final IMovieGenrePort movieGenrePort;
+    private final IGenrePort genrePort;
 
-    public MovieEntity createMovie(CreateMovieRequest movieRequest) {
-        var movieEntity = movieMapper.toEntityFromRequest(movieRequest);
-        movieEntity = moviePort.save(movieEntity);
+    public MovieEntity updateMovie(Long movieId, UpdateMovieRequest request) {
+        moviePort.getMovieById(movieId);
 
-        var genreIds = movieRequest.getGenreIds();
+        MovieEntity newMovie = movieMapper.toEntityFromRequest(request);
+        newMovie.setId(movieId);
+
+        var genreIds = request.getGenreIds();
         var genres = genrePort.getGenresByIds(genreIds);
 
         if (genreIds.size() != genres.size()) {
@@ -37,18 +39,21 @@ public class CreateMovieUseCase {
             throw new CreateMovieException();
         }
 
-        final Long movieId = movieEntity.getId();
+        newMovie = moviePort.save(newMovie);
+        newMovie.setGenres(genres);
 
-        List<MovieGenreEntity> movieGenreEntities =  genres.stream().map(genre -> {
-            MovieGenreEntity movieGenreEntity = new MovieGenreEntity();
-            movieGenreEntity.setMovieId(movieId);
-            movieGenreEntity.setGenreId(genre.getId());
-            return movieGenreEntity;
-        }).toList();
+        movieGenrePort.deleteByMovieId(movieId);
 
-        movieGenrePort.saveAll(movieGenreEntities);
+        List<MovieGenreEntity> movieGenres = genreIds.stream()
+                .map(genreId -> {
+                    MovieGenreEntity movieGenre = new MovieGenreEntity();
+                    movieGenre.setGenreId(genreId);
+                    movieGenre.setMovieId(movieId);
+                    return movieGenre;
+                })
+                .toList();
+        movieGenrePort.saveAll(movieGenres);
 
-        movieEntity.setGenres(genres);
-        return movieEntity;
+        return newMovie;
     }
 }

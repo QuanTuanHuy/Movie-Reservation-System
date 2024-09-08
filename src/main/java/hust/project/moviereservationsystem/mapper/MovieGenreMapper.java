@@ -12,5 +12,7 @@ public abstract class MovieGenreMapper {
 
     public abstract MovieGenreEntity toEntityFromModel(MovieGenreModel model);
 
+    public abstract List<MovieGenreModel> toModelsFromEntities(List<MovieGenreEntity> entities);
+
     public abstract List<MovieGenreEntity> toEntitiesFromModels(List<MovieGenreModel> models);
 }

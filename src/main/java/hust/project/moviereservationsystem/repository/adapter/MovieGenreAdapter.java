@@ -27,6 +27,11 @@ public class MovieGenreAdapter implements IMovieGenrePort {
     }
 
     @Override
+    public void saveAll(List<MovieGenreEntity> movieGenreEntities) {
+        movieGenreRepository.saveAll(movieGenreMapper.toModelsFromEntities(movieGenreEntities));
+    }
+
+    @Override
     public List<MovieGenreEntity> getByGenreIds(List<Long> genreIds) {
         return movieGenreMapper.toEntitiesFromModels(movieGenreRepository.findByGenreIdIn(genreIds));
     }
@@ -34,5 +39,10 @@ public class MovieGenreAdapter implements IMovieGenrePort {
     @Override
     public List<MovieGenreEntity> getByMovieIds(List<Long> movieIds) {
         return movieGenreMapper.toEntitiesFromModels(movieGenreRepository.findByMovieIdIn(movieIds));
+    }
+
+    @Override
+    public void deleteByMovieId(Long movieId) {
+        movieGenreRepository.deleteByMovieId(movieId);
     }
 }
