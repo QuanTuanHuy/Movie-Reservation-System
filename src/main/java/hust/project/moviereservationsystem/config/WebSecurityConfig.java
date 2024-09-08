@@ -5,6 +5,8 @@ import hust.project.moviereservationsystem.security.JwtTokenFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -14,11 +16,16 @@ import org.springframework.security.web.util.matcher.RegexRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 @RequiredArgsConstructor
 public class WebSecurityConfig {
 
     private final RequestFilter requestFilter;
     private final JwtTokenFilter jwtTokenFilter;
+
+    private String[] publicUrls = {
+            "/api/v1/cinemas/{cinema_id}/shows"
+    };
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -26,9 +33,11 @@ public class WebSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(authorize -> {
+                    authorize.requestMatchers(publicUrls).permitAll();
                     requestFilter.getPublicUrls().forEach(url -> {
                         if (url.getFirst().contains("\\")) {
-                            authorize.requestMatchers(RegexRequestMatcher.regexMatcher(url.getFirst())).permitAll();
+                            authorize.requestMatchers(RegexRequestMatcher.regexMatcher(
+                                    HttpMethod.valueOf(url.getSecond()), url.getFirst())).permitAll();
                         } else {
                             authorize.requestMatchers(url.getFirst()).permitAll();
                         }

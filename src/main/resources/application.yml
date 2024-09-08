@@ -64,7 +64,7 @@ app:
           roles:
             - ADMIN
             - MODERATOR
-        - urlPattern: /api/v1/movies/*
+        - urlPattern: /api/v1/movies/**
           roles:
             - ADMIN
             - MODERATOR
