@@ -59,6 +59,11 @@ public class CinemaAdapter implements ICinemaPort {
     }
 
     @Override
+    public boolean existsByName(String name) {
+        return cinemaRepository.existsByName(name);
+    }
+
+    @Override
     public void deleteCinemaById(Long cinemaId) {
         try {
             cinemaRepository.deleteById(cinemaId);

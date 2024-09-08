@@ -8,4 +8,6 @@ import java.util.List;
 @Repository
 public interface ICinemaRepository extends IBaseRepository<CinemaModel> {
     List<CinemaModel> findByIdIn(List<Long> ids);
+
+    boolean existsByName(String name);
 }

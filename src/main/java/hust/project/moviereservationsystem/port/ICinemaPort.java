@@ -16,5 +16,7 @@ public interface ICinemaPort {
 
     List<CinemaEntity> getCinemasByIds(List<Long> ids);
 
+    boolean existsByName(String name);
+
     void deleteCinemaById(Long cinemaId);
 }
