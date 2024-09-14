@@ -13,10 +13,10 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@Transactional(rollbackFor = Exception.class)
 public class UpdateShowSeatUseCase {
     private final IShowSeatPort showSeatPort;
 
-    @Transactional(rollbackFor = Exception.class)
     public List<ShowSeatEntity> assignShowSeatsToUser(List<Long> showSeatIds, Long userId) {
         List<ShowSeatEntity> showSeats = showSeatPort.getShowSeatsByIds(showSeatIds);
 
@@ -27,6 +27,7 @@ public class UpdateShowSeatUseCase {
             throw new UpdateShowSeatException();
         }
 
+        // TODO
         // use redis later to semaphore
         showSeats = showSeats.stream().peek(showSeat -> {
             showSeat.setIsReserved(true);
@@ -36,7 +37,6 @@ public class UpdateShowSeatUseCase {
         return showSeatPort.saveAll(showSeats);
     }
 
-    @Transactional(rollbackFor = Exception.class)
     public List<ShowSeatEntity> cancelShowSeatsForBookingId(Long bookingId) {
 
         List<ShowSeatEntity> showSeats = showSeatPort.getShowSeatsByBookingId(bookingId);
