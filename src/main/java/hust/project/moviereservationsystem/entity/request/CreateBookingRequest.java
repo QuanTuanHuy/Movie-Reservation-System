@@ -9,7 +9,6 @@ import java.util.List;
 @Setter
 public class CreateBookingRequest {
     List<Long> showSeatIds;
-    private String paymentMethod;
     private Long showId;
     private String note;
 }

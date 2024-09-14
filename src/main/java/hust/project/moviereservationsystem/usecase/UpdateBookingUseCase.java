@@ -48,6 +48,6 @@ public class UpdateBookingUseCase {
 
         booking.setStatus(BookingStatus.CANCELED.name());
 
-        return booking;
+        return bookingPort.save(booking);
     }
 }

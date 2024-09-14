@@ -63,14 +63,6 @@ public class BookingController {
         ));
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'MODERATOR')")
-    @PatchMapping("/{id}/confirm")
-    ResponseEntity<Resource> confirmBooking(@PathVariable(name = "id") Long id) {
-        return ResponseEntity.ok(new Resource(
-                bookingService.confirmBooking(id)
-        ));
-    }
-
     @PatchMapping("/{id}/cancel")
     ResponseEntity<Resource> cancelBooking(@PathVariable(name = "id") Long id) {
         Long userId = userSecurityService.getUserId();

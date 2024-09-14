@@ -68,6 +68,17 @@ public enum ErrorCodes {
     GET_RATING_NOT_FOUND(4000042L, "Get rating not found"),
     DELETE_RATING_FAIL(4000043L, "Delete rating fail"),
 
+    CREATE_PROMOTION_FAIL(4000044L, "Create promotion fail"),
+    GET_PROMOTION_NOT_FOUND(4000045L, "Get promotion not found"),
+    UPDATE_PROMOTION_FAIL(4000046L, "Update promotion fail"),
+
+    CREATE_PAYMENT_FAIL(4000047L, "Create payment fail"),
+    GET_PAYMENT_NOT_FOUND(4000048L, "Get payment not found"),
+    UPDATE_PAYMENT_FAIL(4000049L, "Update payment fail"),
+
+    CREATE_REFUND_FAIL(4000049L, "Create refund fail"),
+    GET_REFUND_NOT_FOUND(4000050L, "Get refund not found"),
+
     BAD_REQUEST(4000041L, "Bad request"),
 
     ;

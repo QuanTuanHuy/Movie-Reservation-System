@@ -1,7 +1,6 @@
 package hust.project.moviereservationsystem.usecase;
 
 import hust.project.moviereservationsystem.constant.BookingStatus;
-import hust.project.moviereservationsystem.constant.PaymentStatus;
 import hust.project.moviereservationsystem.entity.BookingEntity;
 import hust.project.moviereservationsystem.entity.ShowSeatEntity;
 import hust.project.moviereservationsystem.entity.request.CreateBookingRequest;
@@ -24,6 +23,7 @@ public class CreateBookingUseCase {
     private final IBookingPort bookingPort;
     private final IShowSeatPort showSeatPort;
     private final IShowPort showPort;
+    private final UpdateBookingUseCase updateBookingUseCase;
 
     @Transactional(rollbackFor = Exception.class)
     public BookingEntity createBooking(CreateBookingRequest request, Long userId) {
@@ -37,6 +37,7 @@ public class CreateBookingUseCase {
         }
 
         boolean valid = true;
+        // check if all show seats belong to the same show and user
         for (var showSeat : showSeats) {
             if (!showSeat.getUserId().equals(userId) || !showSeat.getShowId().equals(request.getShowId())) {
                 valid = false;
@@ -59,8 +60,6 @@ public class CreateBookingUseCase {
         booking.setNote(request.getNote());
         booking.setStatus(BookingStatus.PENDING.name());
         booking.setTotalSeats((long) showSeatIds.size());
-        booking.setPaymentMethod(request.getPaymentMethod());
-        booking.setPaymentStatus(PaymentStatus.PENDING.name());
 
         booking = bookingPort.save(booking);
 
@@ -68,6 +67,8 @@ public class CreateBookingUseCase {
 
         showSeats = showSeats.stream().peek(showSeat -> showSeat.setBookingId(bookingId)).toList();
         showSeatPort.saveAll(showSeats);
+
+        updateBookingUseCase.confirmBooking(bookingId);
 
         var show = showPort.getShowById(booking.getShowId());
         booking.setShow(show);

@@ -17,8 +17,7 @@ public class BookingEntity extends BaseEntity {
     private Long totalSeats;
     private String status;
     private Long totalPrice;
-    private String paymentMethod;
-    private String paymentStatus;
+    private Long paymentId;
     private String note;
     private LocalDateTime createdAt;
 

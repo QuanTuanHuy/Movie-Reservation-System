@@ -32,11 +32,8 @@ public class BookingModel extends BaseModel {
     @Column(name = "totalPrice")
     private Long totalPrice;
 
-    @Column(name = "payment_method")
-    private String paymentMethod;
-
-    @Column(name = "payment_status")
-    private String paymentStatus;
+    @Column(name = "payment_id")
+    private Long paymentId;
 
     @Column(name = "note")
     private String note;
