@@ -79,6 +79,8 @@ public enum ErrorCodes {
     CREATE_REFUND_FAIL(4000049L, "Create refund fail"),
     GET_REFUND_NOT_FOUND(4000050L, "Get refund not found"),
 
+    SEND_EMAIL_FAIL(4000051L, "Send email fail"),
+
     BAD_REQUEST(4000041L, "Bad request"),
 
     ;

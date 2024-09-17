@@ -33,6 +33,11 @@ spring:
 server:
   port: 5454
 
+notification:
+  email:
+    brevo-url: https://api.brevo.com
+    api-key: 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
+
 app:
   security:
     jwt:

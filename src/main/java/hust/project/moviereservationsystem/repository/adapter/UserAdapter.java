@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -36,4 +38,11 @@ public class UserAdapter implements IUserPort {
     public UserEntity getUserById(Long id) {
         return userMapper.toEntityFromModel(userRepository.findById(id).orElse(null));
     }
+
+    @Override
+    public List<UserEntity> getAllUsers() {
+        return userRepository.findAll().stream().map(userMapper::toEntityFromModel).toList();
+    }
+
+
 }
