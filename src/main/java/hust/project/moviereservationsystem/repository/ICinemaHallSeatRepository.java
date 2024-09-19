@@ -11,4 +11,6 @@ public interface ICinemaHallSeatRepository extends IBaseRepository<CinemaHallSea
     List<CinemaHallSeatModel> findByCinemaHallId(Long cinemaHallId);
 
     Optional<CinemaHallSeatModel> findByCodeAndCinemaHallId(String code, Long cinemaHallId);
+
+    List<CinemaHallSeatModel> findByIdIn(List<Long> ids);
 }

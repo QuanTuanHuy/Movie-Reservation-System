@@ -1,7 +1,6 @@
 package hust.project.moviereservationsystem.service.impl;
 
 import hust.project.moviereservationsystem.entity.request.EmailRequest;
-import hust.project.moviereservationsystem.entity.request.RecipientEMail;
 import hust.project.moviereservationsystem.entity.request.SendEmailRequest;
 import hust.project.moviereservationsystem.entity.request.SenderEmail;
 import hust.project.moviereservationsystem.entity.response.SendEmailResponse;

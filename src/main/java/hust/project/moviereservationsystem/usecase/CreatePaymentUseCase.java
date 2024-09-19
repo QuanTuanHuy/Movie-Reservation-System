@@ -45,6 +45,7 @@ public class CreatePaymentUseCase {
 
         PaymentEntity savedPayment = paymentPort.save(payment);
         booking.setPaymentId(savedPayment.getId());
+        bookingPort.save(booking);
 
         return savedPayment;
     }

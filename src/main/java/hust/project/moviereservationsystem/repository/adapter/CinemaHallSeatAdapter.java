@@ -60,6 +60,13 @@ public class CinemaHallSeatAdapter implements ICinemaHallSeatPort {
     }
 
     @Override
+    public List<CinemaHallSeatEntity> getByIds(List<Long> ids) {
+        return cinemaHallSeatMapper.toEntitiesFromModels(
+                cinemaHallSeatRepository.findByIdIn(ids)
+        );
+    }
+
+    @Override
     public CinemaHallSeatEntity getByCodeAndCinemaHallId(String code, Long cinemaHallId) {
         return cinemaHallSeatMapper.toEntityFromModel(
                 cinemaHallSeatRepository.findByCodeAndCinemaHallId(code, cinemaHallId).orElse(null));

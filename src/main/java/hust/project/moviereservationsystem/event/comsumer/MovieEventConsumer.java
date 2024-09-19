@@ -23,7 +23,7 @@ public class MovieEventConsumer {
     private final IUserPort userPort;
     private final IEmailService emailService;
 
-    @KafkaListener(topics = "new_movie_created", groupId = "movie_service")
+    @KafkaListener(topics = "new_movie_created", groupId = "movie_group")
     public void listenMovieCreatedEvent(MovieCreatedEvent event) {
         System.out.println("Received message: " + event);
 

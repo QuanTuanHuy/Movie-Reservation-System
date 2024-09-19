@@ -14,6 +14,8 @@ public interface IBookingPort {
 
     BookingEntity getBookingById(Long id);
 
+    BookingEntity getBookingByPaymentId(Long paymentId);
+
     List<BookingEntity> getBookingsByUserId(Long userId);
 
     List<BookingEntity> getBookingsByShowIds(List<Long> showIds);

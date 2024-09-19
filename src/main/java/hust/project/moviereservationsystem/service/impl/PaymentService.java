@@ -30,7 +30,6 @@ public class PaymentService implements IPaymentService {
     public PaymentEntity updatePaymentStatus(Long paymentId, String status) {
         PaymentEntity payment = updatePaymentUseCase.updatePaymentStatus(paymentId, status);
 
-        // movie title, cinema name, showtime, seat number, total price
         PaymentEvent paymentEvent = PaymentEvent.builder()
                 .paymentId(paymentId)
                 .status(PaymentStatus.valueOf(status).name())

@@ -16,5 +16,7 @@ public interface ICinemaHallSeatPort {
 
     List<CinemaHallSeatEntity> getByCinemaHallId(Long cinemaHallId);
 
+    List<CinemaHallSeatEntity> getByIds(List<Long> ids);
+
     CinemaHallSeatEntity getByCodeAndCinemaHallId(String code, Long cinemaHallId);
 }

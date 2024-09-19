@@ -156,20 +156,20 @@ public class EmailTemplate {
             "            <h1>Xác nhận thanh toán thành công</h1>\n" +
             "        </div>\n" +
             "        <div class=\"content\">\n" +
-            "            <h2>Xin chào [Tên Khách Hàng],</h2>\n" +
-            "            <p>Cảm ơn bạn đã đặt vé tại [Tên Rạp]. Dưới đây là thông tin vé của bạn:</p>\n" +
+            "            <h2>Xin chào {{params.userFullName}},</h2>\n" +
+            "            <p>Cảm ơn bạn đã đặt vé tại HUY CINEMA. Dưới đây là thông tin vé của bạn:</p>\n" +
             "            <div class=\"ticket-info\">\n" +
-            "                <p><strong>Bộ phim:</strong> [Tên Bộ Phim]</p>\n" +
-            "                <p><strong>Rạp chiếu:</strong> [Tên Rạp]</p>\n" +
-            "                <p><strong>Ngày chiếu:</strong> [Ngày Chiếu]</p>\n" +
-            "                <p><strong>Giờ chiếu:</strong> [Giờ Chiếu]</p>\n" +
-            "                <p><strong>Vị trí ghế:</strong> [Số Ghế]</p>\n" +
-            "                <p><strong>Mã vé:</strong> [Mã Vé]</p>\n" +
+            "                <p><strong>Bộ phim:</strong> {{params.movieTitle}}</p>\n" +
+            "                <p><strong>Rạp chiếu:</strong> {{params.cinemaName}}</p>\n" +
+            "                <p><strong>Phòng chiếu:</strong> {{params.cinemaHallName}}</p>\n" +
+            "                <p><strong>Ngày chiếu:</strong> {{params.showTime}}</p>\n" +
+            "                <p><strong>Vị trí ghế:</strong> {{params.showSeatCodes}}</p>\n" +
+            "                <p><strong>Mã vé:</strong> {{params.bookingId}}</p>\n" +
             "            </div>\n" +
             "            <a href=\"[Link Xem Chi Tiết]\" class=\"btn\">Xem chi tiết vé</a>\n" +
             "        </div>\n" +
             "        <div class=\"footer\">\n" +
-            "            <p>Bạn nhận được email này vì đã đặt vé tại [Tên Rạp]. Nếu có bất kỳ câu hỏi nào, vui lòng liên hệ với chúng tôi.</p>\n" +
+            "            <p>Bạn nhận được email này vì đã đặt vé tại HUY CINEMA. Nếu có bất kỳ câu hỏi nào, vui lòng liên hệ với chúng tôi.</p>\n" +
             "        </div>\n" +
             "    </div>\n" +
             "</body>\n" +

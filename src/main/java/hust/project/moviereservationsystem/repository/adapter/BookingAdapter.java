@@ -26,6 +26,13 @@ public class BookingAdapter implements IBookingPort {
     private final BookingMapper bookingMapper;
 
     @Override
+    public BookingEntity getBookingByPaymentId(Long paymentId) {
+        return bookingMapper.toEntityFromModel(
+                bookingRepository.findByPaymentId(paymentId).orElseThrow(GetBookingException::new)
+        );
+    }
+
+    @Override
     public BookingEntity save(BookingEntity bookingEntity) {
         try {
             var bookingModel = bookingMapper.toModelFromEntity(bookingEntity);
