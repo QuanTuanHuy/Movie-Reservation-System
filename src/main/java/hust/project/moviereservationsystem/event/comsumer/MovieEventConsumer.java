@@ -1,10 +1,12 @@
 package hust.project.moviereservationsystem.event.comsumer;
 
 import hust.project.moviereservationsystem.constant.EmailTemplate;
+import hust.project.moviereservationsystem.entity.MovieEntity;
 import hust.project.moviereservationsystem.entity.UserEntity;
 import hust.project.moviereservationsystem.entity.request.RecipientEMail;
 import hust.project.moviereservationsystem.entity.request.SendEmailRequest;
 import hust.project.moviereservationsystem.event.dto.MovieCreatedEvent;
+import hust.project.moviereservationsystem.port.IMoviePort;
 import hust.project.moviereservationsystem.port.IUserPort;
 import hust.project.moviereservationsystem.service.IEmailService;
 import lombok.RequiredArgsConstructor;
@@ -21,17 +23,20 @@ import java.util.Map;
 @Slf4j
 public class MovieEventConsumer {
     private final IUserPort userPort;
+    private final IMoviePort moviePort;
     private final IEmailService emailService;
 
-    @KafkaListener(topics = "new_movie_created", groupId = "movie_group")
+    @KafkaListener(topics = "new_movie_created", groupId = "notification_group")
     public void listenMovieCreatedEvent(MovieCreatedEvent event) {
         System.out.println("Received message: " + event);
 
+        MovieEntity movie = moviePort.getMovieById(event.getMovieId());
+
         Map<String, String> params = new HashMap<>();
-        params.put("title", event.getTitle());
-        params.put("description", event.getDescription());
-        params.put("releaseDate", event.getReleaseDate());
-        params.put("movieInfoUrl", event.getMovieInfoUrl());
+        params.put("title", movie.getTitle());
+        params.put("description", movie.getDescription());
+        params.put("releaseDate", movie.getReleaseDate().toString());
+        params.put("movieInfoUrl", "localhost:5454/api/v1/movies/" + movie.getId());
 
         List<UserEntity> users = userPort.getAllUsers();
         users.forEach(user -> {

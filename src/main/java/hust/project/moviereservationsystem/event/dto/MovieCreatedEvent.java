@@ -8,8 +8,5 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 public class MovieCreatedEvent {
-    private String title;
-    private String description;
-    private String releaseDate;
-    private String movieInfoUrl;
+    private Long movieId;
 }

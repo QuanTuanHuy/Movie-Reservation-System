@@ -6,7 +6,6 @@ import hust.project.moviereservationsystem.entity.request.GetMovieRequest;
 import hust.project.moviereservationsystem.entity.request.UpdateMovieRequest;
 import hust.project.moviereservationsystem.entity.response.PageInfo;
 import hust.project.moviereservationsystem.event.dto.MovieCreatedEvent;
-import hust.project.moviereservationsystem.event.dto.NotificationEvent;
 import hust.project.moviereservationsystem.service.IMovieService;
 import hust.project.moviereservationsystem.usecase.CreateMovieUseCase;
 import hust.project.moviereservationsystem.usecase.DeleteMovieUseCase;
@@ -33,10 +32,11 @@ public class MovieService implements IMovieService {
         MovieEntity movie =  createMovieUseCase.createMovie(request);
 
         MovieCreatedEvent movieCreatedEvent = MovieCreatedEvent.builder()
-                .title(movie.getTitle())
-                .description(movie.getDescription())
-                .releaseDate(movie.getReleaseDate().toString())
-                .movieInfoUrl("localhost:5454/api/v1/movies/" + movie.getId())
+//                .title(movie.getTitle())
+//                .description(movie.getDescription())
+//                .releaseDate(movie.getReleaseDate().toString())
+//                .movieInfoUrl("localhost:5454/api/v1/movies/" + movie.getId())
+                .movieId(movie.getId())
                 .build();
 
         kafkaTemplate.send("new_movie_created", movieCreatedEvent);

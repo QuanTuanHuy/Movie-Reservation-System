@@ -32,7 +32,7 @@ public class PaymentEventConsumer {
     private final IEmailService emailService;
 
 
-    @KafkaListener(topics = "payment_event", groupId = "payment_group")
+    @KafkaListener(topics = "payment_event", groupId = "notification_group")
     public void listenPaymentEvent(PaymentEvent event) {
         System.out.println("Received message: " + event);
 
