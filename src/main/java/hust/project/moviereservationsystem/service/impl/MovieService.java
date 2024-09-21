@@ -4,7 +4,7 @@ import hust.project.moviereservationsystem.entity.MovieEntity;
 import hust.project.moviereservationsystem.entity.request.CreateMovieRequest;
 import hust.project.moviereservationsystem.entity.request.GetMovieRequest;
 import hust.project.moviereservationsystem.entity.request.UpdateMovieRequest;
-import hust.project.moviereservationsystem.entity.response.PageInfo;
+import hust.project.moviereservationsystem.entity.response.GetAllEntityResponse;
 import hust.project.moviereservationsystem.event.dto.MovieCreatedEvent;
 import hust.project.moviereservationsystem.service.IMovieService;
 import hust.project.moviereservationsystem.usecase.CreateMovieUseCase;
@@ -12,14 +12,16 @@ import hust.project.moviereservationsystem.usecase.DeleteMovieUseCase;
 import hust.project.moviereservationsystem.usecase.GetMovieUseCase;
 import hust.project.moviereservationsystem.usecase.UpdateMovieUseCase;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.util.Pair;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class MovieService implements IMovieService {
     private final CreateMovieUseCase createMovieUseCase;
     private final GetMovieUseCase getMovieUseCase;
@@ -32,10 +34,6 @@ public class MovieService implements IMovieService {
         MovieEntity movie =  createMovieUseCase.createMovie(request);
 
         MovieCreatedEvent movieCreatedEvent = MovieCreatedEvent.builder()
-//                .title(movie.getTitle())
-//                .description(movie.getDescription())
-//                .releaseDate(movie.getReleaseDate().toString())
-//                .movieInfoUrl("localhost:5454/api/v1/movies/" + movie.getId())
                 .movieId(movie.getId())
                 .build();
 
@@ -45,21 +43,28 @@ public class MovieService implements IMovieService {
     }
 
     @Override
-    public Pair<PageInfo, List<MovieEntity>> getAllMovies(GetMovieRequest filter) {
-        return getMovieUseCase.getAllMovies(filter);
+    @Cacheable(value = "movies", key = "#filter.getPage() + '-' + #filter.getPageSize() + '-' + #filter.getTitle() + " +
+            "'-' + #filter.getReleaseDate() + '-' + #filter.getLanguage() + '-' + #filter.getGenre()")
+    public GetAllEntityResponse getAllMovies(GetMovieRequest filter) {
+        var result = getMovieUseCase.getAllMovies(filter);
+        return new GetAllEntityResponse(result.getFirst(), result.getSecond());
     }
 
     @Override
+    @Cacheable(value = "movies", key = "#movieId")
     public MovieEntity getDetailMovie(Long movieId) {
+        log.info("cache miss");
         return getMovieUseCase.getDetailMovie(movieId);
     }
 
     @Override
+    @CachePut(value = "movies", key = "#movieId")
     public MovieEntity updateMovie(Long movieId, UpdateMovieRequest request) {
         return updateMovieUseCase.updateMovie(movieId, request);
     }
 
     @Override
+    @CacheEvict(value = "movies", key = "#movieId")
     public void deleteMovie(Long movieId) {
         deleteMovieUseCase.deleteMovie(movieId);
     }
