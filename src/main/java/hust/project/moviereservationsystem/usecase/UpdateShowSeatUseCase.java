@@ -65,12 +65,34 @@ public class UpdateShowSeatUseCase {
     public List<ShowSeatEntity> cancelShowSeatsForBookingId(Long bookingId) {
 
         List<ShowSeatEntity> showSeats = showSeatPort.getShowSeatsByBookingId(bookingId);
+        Long userId = showSeats.get(0).getUserId();
 
-        showSeats = showSeats.stream().peek(showSeat -> {
-            showSeat.setIsReserved(false);
-            showSeat.setBookingId(null);
-            showSeat.setUserId(null);
-        }).toList();
+        for (var showSeat : showSeats) {
+            String lockKey = PREFIX_LOCK_KEY + showSeat.getId();
+
+            while (true) {
+                try {
+                    if (redisPort.tryLock(lockKey, userId.toString(), 10L)) {
+                        showSeat.setIsReserved(false);
+                        showSeat.setUserId(null);
+                        break;
+                    }
+                } catch (RedisConnectionException e) {
+                    log.error("[UpdateShowSeatUseCase] Redis connection error");
+                    throw new RedisConnectionException();
+                } finally {
+                    log.info("[UpdateShowSeatUseCase] release lock, {}", lockKey);
+                    redisPort.releaseLock(lockKey);
+                }
+
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    throw new RuntimeException("Thread interrupted");
+                }
+            }
+        }
 
         return showSeatPort.saveAll(showSeats);
     }
