@@ -1,7 +1,6 @@
 package hust.project.moviereservationsystem.port;
 
 import hust.project.moviereservationsystem.entity.UserEntity;
-import hust.project.moviereservationsystem.model.UserModel;
 
 import java.util.List;
 
@@ -13,4 +12,6 @@ public interface IUserPort {
     UserEntity getUserById(Long id);
 
     List<UserEntity> getAllUsers();
+
+    List<UserEntity> getUsersByIds(List<Long> ids);
 }

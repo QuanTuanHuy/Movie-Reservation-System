@@ -32,10 +32,6 @@ public class MovieService implements IMovieService {
         MovieEntity movie =  createMovieUseCase.createMovie(request);
 
         MovieCreatedEvent movieCreatedEvent = MovieCreatedEvent.builder()
-//                .title(movie.getTitle())
-//                .description(movie.getDescription())
-//                .releaseDate(movie.getReleaseDate().toString())
-//                .movieInfoUrl("localhost:5454/api/v1/movies/" + movie.getId())
                 .movieId(movie.getId())
                 .build();
 
