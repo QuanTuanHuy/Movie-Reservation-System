@@ -44,5 +44,10 @@ public class UserAdapter implements IUserPort {
         return userRepository.findAll().stream().map(userMapper::toEntityFromModel).toList();
     }
 
+    @Override
+    public List<UserEntity> getUsersByIds(List<Long> ids) {
+        return userRepository.findAllById(ids).stream().map(userMapper::toEntityFromModel).toList();
+    }
+
 
 }

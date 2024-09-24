@@ -81,6 +81,9 @@ public enum ErrorCodes {
 
     SEND_EMAIL_FAIL(4000051L, "Send email fail"),
 
+    CREATE_COMMENT_ON_MOVIE_FAIL(4000052L, "Create comment on movie fail"),
+    UPDATE_COMMENT_ON_MOVIE_FAIL(4000053L, "Update comment on movie fail"),
+
     BAD_REQUEST(4000041L, "Bad request"),
 
     ;
