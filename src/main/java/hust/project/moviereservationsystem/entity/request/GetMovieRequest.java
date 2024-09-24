@@ -3,7 +3,6 @@ package hust.project.moviereservationsystem.entity.request;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter

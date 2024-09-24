@@ -84,6 +84,8 @@ public enum ErrorCodes {
     CREATE_COMMENT_ON_MOVIE_FAIL(4000052L, "Create comment on movie fail"),
     UPDATE_COMMENT_ON_MOVIE_FAIL(4000053L, "Update comment on movie fail"),
 
+    REDIS_CONNECTION_ERROR(4000054L, "Redis connection error"),
+
     BAD_REQUEST(4000041L, "Bad request"),
 
     ;
