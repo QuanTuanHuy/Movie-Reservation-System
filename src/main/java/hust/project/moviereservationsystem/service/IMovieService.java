@@ -4,12 +4,12 @@ import hust.project.moviereservationsystem.entity.MovieEntity;
 import hust.project.moviereservationsystem.entity.request.CreateMovieRequest;
 import hust.project.moviereservationsystem.entity.request.GetMovieRequest;
 import hust.project.moviereservationsystem.entity.request.UpdateMovieRequest;
-import hust.project.moviereservationsystem.entity.response.GetAllEntityResponse;
+import hust.project.moviereservationsystem.entity.response.PageResponse;
 
 public interface IMovieService {
     MovieEntity createMovie(CreateMovieRequest request);
 
-    GetAllEntityResponse getAllMovies(GetMovieRequest filter);
+    PageResponse<MovieEntity> getAllMovies(GetMovieRequest filter);
 
     MovieEntity getDetailMovie(Long movieId);
 

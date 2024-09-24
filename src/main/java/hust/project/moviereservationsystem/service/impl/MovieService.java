@@ -4,7 +4,7 @@ import hust.project.moviereservationsystem.entity.MovieEntity;
 import hust.project.moviereservationsystem.entity.request.CreateMovieRequest;
 import hust.project.moviereservationsystem.entity.request.GetMovieRequest;
 import hust.project.moviereservationsystem.entity.request.UpdateMovieRequest;
-import hust.project.moviereservationsystem.entity.response.GetAllEntityResponse;
+import hust.project.moviereservationsystem.entity.response.PageResponse;
 import hust.project.moviereservationsystem.event.dto.MovieCreatedEvent;
 import hust.project.moviereservationsystem.service.IMovieService;
 import hust.project.moviereservationsystem.usecase.CreateMovieUseCase;
@@ -45,9 +45,16 @@ public class MovieService implements IMovieService {
     @Override
     @Cacheable(value = "movies", key = "#filter.getPage() + '-' + #filter.getPageSize() + '-' + #filter.getTitle() + " +
             "'-' + #filter.getReleaseDate() + '-' + #filter.getLanguage() + '-' + #filter.getGenre()")
-    public GetAllEntityResponse getAllMovies(GetMovieRequest filter) {
+    public PageResponse<MovieEntity> getAllMovies(GetMovieRequest filter) {
         var result = getMovieUseCase.getAllMovies(filter);
-        return new GetAllEntityResponse(result.getFirst(), result.getSecond());
+        return PageResponse.<MovieEntity>builder()
+                .totalPage(result.getFirst().getTotalPage())
+                .totalRecord(result.getFirst().getTotalRecord())
+                .pageSize(result.getFirst().getPageSize())
+                .previousPage(result.getFirst().getPreviousPage())
+                .nextPage(result.getFirst().getNextPage())
+                .data(result.getSecond())
+                .build();
     }
 
     @Override
