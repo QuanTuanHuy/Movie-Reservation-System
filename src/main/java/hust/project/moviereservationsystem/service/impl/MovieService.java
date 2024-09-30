@@ -7,6 +7,7 @@ import hust.project.moviereservationsystem.entity.request.UpdateMovieRequest;
 import hust.project.moviereservationsystem.entity.response.PageResponse;
 import hust.project.moviereservationsystem.event.dto.MovieCreatedEvent;
 import hust.project.moviereservationsystem.service.IMovieService;
+import hust.project.moviereservationsystem.service.IMovieSyncDataService;
 import hust.project.moviereservationsystem.usecase.CreateMovieUseCase;
 import hust.project.moviereservationsystem.usecase.DeleteMovieUseCase;
 import hust.project.moviereservationsystem.usecase.GetMovieUseCase;
@@ -29,6 +30,8 @@ public class MovieService implements IMovieService {
     private final DeleteMovieUseCase deleteMovieUseCase;
     private final KafkaTemplate<String, Object> kafkaTemplate;
 
+    private final IMovieSyncDataService movieSyncDataService;
+
     @Override
     public MovieEntity createMovie(CreateMovieRequest request) {
         MovieEntity movie =  createMovieUseCase.createMovie(request);
@@ -36,6 +39,8 @@ public class MovieService implements IMovieService {
         MovieCreatedEvent movieCreatedEvent = MovieCreatedEvent.builder()
                 .movieId(movie.getId())
                 .build();
+
+        movieSyncDataService.createMovie(movie.getId());
 
         kafkaTemplate.send("new_movie_created", movieCreatedEvent);
 
