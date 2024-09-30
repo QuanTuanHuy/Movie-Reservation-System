@@ -86,6 +86,11 @@ public enum ErrorCodes {
 
     REDIS_CONNECTION_ERROR(4000054L, "Redis connection error"),
 
+    CREATE_MOVIE_ELASTICSEARCH_FAIL(4000055L, "Create movie elasticsearch fail"),
+    GET_MOVIE_ELASTICSEARCH_FAIL(4000056L, "Get movie elasticsearch fail"),
+    UPDATE_MOVIE_ELASTICSEARCH_FAIL(4000056L, "Update movie elasticsearch fail"),
+    DELETE_MOVIE_ELASTICSEARCH_FAIL(4000057L, "Delete movie elasticsearch fail"),
+
     BAD_REQUEST(4000041L, "Bad request"),
 
     ;
